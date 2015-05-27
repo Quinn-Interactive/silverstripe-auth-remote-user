@@ -1,0 +1,19 @@
+{
+    "name": "quinninteractive/silverstripe-auth-remote-user",
+    "description": "Logs members in via the REMOTE_USER server variable; optionally creates new members.",
+    "type": "silverstripe-module",
+    "require": {
+        "silverstripe/framework": "~3.1"
+    },
+    "extra": {
+        "installer-name": "auth-remote-user"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fred Condo",
+            "email": "fcondo@quinn.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

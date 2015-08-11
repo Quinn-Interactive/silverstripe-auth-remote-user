@@ -40,6 +40,11 @@ class AuthRemoteUserExtension extends Extension {
 	public function onAfterInit() {
 		if (isset($_SERVER['REMOTE_USER'])) {
 			$unique_identifier = $_SERVER['REMOTE_USER'];
+		}
+		elseif (isset($_SERVER['REDIRECT_REMOTE_USER'])) {
+			$unique_identifier = $_SERVER['REDIRECT_REMOTE_USER'];
+		}
+		if (isset($unique_identifier)) {
 			$unique_identifier_field = Member::config()->unique_identifier_field;
 			$member = Member::get()->filter($unique_identifier_field, $unique_identifier)->first();
 			if ($member) {

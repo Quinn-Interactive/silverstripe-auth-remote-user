@@ -20,7 +20,7 @@ class AuthRemoteUserExtension extends Extension {
 	 * @param Boolean $setting
 	 */
 	public static function setAutoCreateUser($setting) {
-		AuthRemoteUserExtension::config()->auto_create_user = (bool) $setting;
+		Config::inst()->update('AuthRemoteUserExtension', 'auto_create_user', (bool) $setting);
 	}
 
 	/**
@@ -29,12 +29,12 @@ class AuthRemoteUserExtension extends Extension {
 	 * @param string $group_name A valid group name
 	 */
 	public static function setAutoUserGroup($group_name) {
-		AuthRemoteUserExtension::config()->auto_user_group = $group_name;
+		Config::inst()->update('AuthRemoteUserExtension', 'auto_user_group', $group_name);
 	}
 
 	/**
 	 * If the REMOTE_USER is set and is in the Member table, log that member in. If
-	 * not, and AuthRemoteUserExtension::config()->auto_create_user is set, add that
+	 * not, and Config::inst()->get('AuthRemoteUserExtension', 'auto_create_user') is set, add that
 	 * Member to the configured group, and log the new user in. Otherwise, do nothing.
 	 */
 	public function onAfterInit() {
@@ -50,10 +50,10 @@ class AuthRemoteUserExtension extends Extension {
 			if ($member) {
 				$member->logIn();
 			}
-			elseif (AuthRemoteUserExtension::config()->auto_create_user &&
-					strlen(AuthRemoteUserExtension::config()->auto_user_group)) {
+			elseif (Config::inst()->get('AuthRemoteUserExtension', 'auto_create_user') &&
+					strlen(Config::inst()->get('AuthRemoteUserExtension', 'auto_user_group'))) {
 				$group = Group::get()
-					->filter('Title', AuthRemoteUserExtension::config()->auto_user_group)->first();
+					->filter('Title', Config::inst()->get('AuthRemoteUserExtension', 'auto_user_group'))->first();
 				if ($group) {
 					$member = new Member();
 					$member->$unique_identifier_field = $unique_identifier;

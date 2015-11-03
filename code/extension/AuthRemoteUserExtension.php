@@ -49,6 +49,7 @@ class AuthRemoteUserExtension extends Extension {
 			$member = Member::get()->filter($unique_identifier_field, $unique_identifier)->first();
 			if ($member) {
 				$member->logIn();
+                $this->owner->redirectBack();
 			}
 			elseif (Config::inst()->get('AuthRemoteUserExtension', 'auto_create_user') &&
 					strlen(Config::inst()->get('AuthRemoteUserExtension', 'auto_user_group'))) {

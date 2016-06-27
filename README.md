@@ -8,7 +8,7 @@ This module was created to support Apache with mod_shib, but it works the same f
 
 This module requires SilverStripe framework 3.1.x.
 
-This is version 1.0.0 of this module.
+This is version 1.0.1 of this module.
 
 ## Configuration
 

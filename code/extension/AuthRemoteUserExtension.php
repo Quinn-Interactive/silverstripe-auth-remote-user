@@ -49,7 +49,10 @@ class AuthRemoteUserExtension extends Extension
             $member = Member::get()->filter($unique_identifier_field, $unique_identifier)->first();
             if ($member) {
                 $member->logIn();
-                $this->owner->redirectBack();
+                $backURL = $this->owner->getRequest()->requestVar('BackURL');
+                if ($backURL && Director::is_site_url($backURL)) {
+                    $this->owner->redirect($backURL);
+                }
             } elseif (Config::inst()->get('AuthRemoteUserExtension', 'auto_create_user') &&
                     strlen(Config::inst()->get('AuthRemoteUserExtension', 'auto_user_group'))) {
                 $group = Group::get()
